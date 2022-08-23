@@ -1,0 +1,17 @@
+{% extends 'layout.html' %}
+{% block content %}
+    <section class="section">
+        <div class="container">
+            <h1 class="title is-1">{{ quiz.title }}</h1>
+            <p class="subtitle">by <b>{{ quiz.owner }}</b></p>
+
+            <div class="content is-medium">
+                {{ quiz.text|to_html|safe }}
+            </div>
+
+            <form method="post">
+                <button class="button is-primary is-fullwidth" type="submit">참여하기</button>
+            </form>
+        </div>
+    </section>
+{% endblock %}

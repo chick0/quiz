@@ -1,0 +1,137 @@
+{% extends 'layout.html' %}
+{% block content %}
+    <section class="section">
+        <div class="container">
+            <h1 class="title is-1">문항 등록</h1>
+            {% set error = request.args.get("error") %}
+            {% if error is not none %}
+                <div class="notification is-danger is-light">
+                    <p>{{ error }}</p>
+                </div>
+            {% endif %}
+            {% set alert = request.args.get("alert") %}
+            {% if alert is not none %}
+                <div class="notification is-info is-light">
+                    <p>{{ alert }}</p>
+                </div>
+            {% endif %}
+
+            <div class="box">
+                <a class="button is-link" href="/question/manage/{{ quiz_id }}">문항 목록 확인 및 관리</a>
+            </div>
+
+            <form method="post">
+                <div class="box">
+                    <div class="field">
+                        <label for="text" class="label">문제</label>
+                        <div class="control">
+                            <textarea id="text" name="text" class="textarea" placeholder="일부 마크 다운 문법을 사용 할 수 있습니다." required></textarea>
+                        </div>
+                    </div>
+
+                    <div class="field">
+                        <label for="score" class="label">점수</label>
+                        <div class="control">
+                            <input id="score" class="input" type="number" name="score" value="1" placeholder="소수는 사용할 수 없습니다." required>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="box">
+                    <div class="field">
+                        <label for="type" class="label">선택지 형식</label>
+                        <div class="control">
+                            <div class="select is-fullwidth">
+                                <select id="type" name="type">
+                                    <option value="0">O/X 퀴즈</option>
+                                    <option value="1">객관식</option>
+                                    <option value="2">주관식</option>
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+
+                <!-- O/X 퀴즈 -->
+                <div class="box" id="box-a">
+                    <div class="field">
+                        <label for="answer-0" class="label">정답</label>
+                        <div class="control">
+                            <div class="select is-fullwidth">
+                                <select id="answer-0" name="answer-0">
+                                    <option value="O" selected>O</option>
+                                    <option value="X">X</option>
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- 객관식 퀴즈 -->
+                <div class="box" id="box-b">
+                    <div class="field">
+                        <label for="options-1" class="label">객관식 선택지</label>
+                        <div class="control">
+                            <textarea id="options-1" name="options-1" class="textarea">
+1: 1번 선택지
+2: 2번 선택지
+3: 3번 선택지
+4: 4번 선택지
+5: 5번 선택지
+                            </textarea>
+                        </div>
+                    </div>
+
+                    <div class="field">
+                        <label for="answer-1" class="label">정답</label>
+                        <div class="control">
+                            <input id="answer-1" class="input" type="number" name="answer-1" placeholder="선택지 번호를 입력해주세요.">
+                        </div>
+                    </div>
+                </div>
+
+                <!-- 주관식 퀴즈 -->
+                <div class="box" id="box-c">
+                    <div class="field">
+                        <label for="answer-2" class="label">정답</label>
+                        <div class="control">
+                            <textarea id="answer-2" name="answer-2" class="textarea"></textarea>
+                        </div>
+                    </div>
+                </div>
+
+                <button class="button is-dark is-fullwidth" type="submit">등록하기</button>
+            </form>
+        </div>
+    </section>
+
+<script>
+    const select = document.getElementById("type");
+
+    const a = document.getElementById("box-a");
+    const b = document.getElementById("box-b");
+    const c = document.getElementById("box-c");
+
+    function ShowAnswerInput() {
+        let choice = select.value;
+
+        a.classList.add("is-hidden");
+        b.classList.add("is-hidden");
+        c.classList.add("is-hidden");
+
+        if(choice == 0) {
+            a.classList.remove("is-hidden");
+        }
+        else if(choice == 1){
+            b.classList.remove("is-hidden");
+        }
+        else{
+            c.classList.remove("is-hidden");
+        }
+    }
+
+    select.addEventListener('change', ShowAnswerInput);
+    ShowAnswerInput();
+</script>
+{% endblock %}

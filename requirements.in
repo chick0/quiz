@@ -1,0 +1,10 @@
+flask
+flask-migrate
+flask-sqlalchemy
+mysqlclient
+mistune
+dnspython
+user-agents
+python-dotenv
+waitress
+paste

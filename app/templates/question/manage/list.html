@@ -1,0 +1,53 @@
+{% extends 'layout.html' %}
+{% block content %}
+    <section class="section">
+        <div class="container">
+            <h1 class="title is-1">문항 관리</h1>
+            <div class="box">
+                <a class="button is-link" href="/quiz/custom/{{ quiz_id }}">퀴즈 관리</a>
+                <a class="button is-link" href="/question/manage/{{ quiz_id }}/create-new">새로운 문항 생성</a>
+            </div>
+        </div>
+    </section>
+
+    <section class="section">
+        <div class="container">
+            {% set alert = request.args.get("alert") %}
+            {% if alert is not none %}
+                <div class="notification is-info is-light">
+                    <p>{{ alert }}</p>
+                </div>
+            {% endif %}
+        {% for question in question_list %}
+            <div class="box" id="q-{{ question.id }}">
+                <h4 class="title is-4">문제. {{ loop.index }} ({{ question.score }}점)</h4>
+
+                <div class="content is-medium">
+                    {{ question.text|to_html|safe }}
+                </div>
+
+            {% if question.type == 1 %}
+                <div class="box">
+                    <h5 class="title is-5">보기</h5>
+                    <div class="content">
+                        {{ question.options|parse_options|safe }}
+                    </div>
+                </div>
+            {% endif %}
+
+                <div class="box">
+                    <h5 class="title is-5">정답</h5>
+                    <div class="content">
+                        {{ question.answer }}
+                    </div>
+                </div>
+
+                <div class="buttons">
+                    <a class="button is-link" href="/question/manage/2/{{ question.id }}">문항 수정</a>
+                    <a class="button is-danger" href="/question/manage/2/{{ question.id }}/delete">문항 삭제</a>
+                </div>
+            </div>
+        {% endfor %}
+        </div>
+    </section>
+{% endblock %}

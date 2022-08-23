@@ -1,0 +1,26 @@
+{% extends 'layout.html' %}
+{% block content %}
+    <section class="section">
+        <div class="container">
+            <h1 class="title is-1">참여 불가</h1>
+
+        {% if why == "private" %}
+            <div class="content">
+                <p>해당 퀴즈는 비공개 상태라 해당 퀴즈에 참여 할 수 없습니다.</p>
+            </div>
+        {% elif why == "expired" %}
+            <div class="content">
+                <p>마감된 퀴즈는 참여 할 수 없습니다.</p>
+            </div>
+        {% elif why == "finished" %}
+            <div class="content">
+                <p>이미 참여한 퀴즈는 참여 할 수 없습니다.</p>
+            </div>
+        {% else %}
+            <div class="content">
+                <p>알 수 없는 이유로 참여 할 수 없습니다.</p>
+            </div>
+        {% endif %}
+        </div>
+    </section>
+{% endblock %}

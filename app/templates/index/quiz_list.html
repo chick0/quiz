@@ -1,0 +1,41 @@
+{% extends 'layout.html' %}
+{% block content %}
+    <section class="section">
+        <div class="container">
+            <h1 class="title is-1">퀴즈 목록</h1>
+
+            <div class="block">
+            {% for quiz in quiz_list %}
+                <div class="box">
+                    <h3 class="title is-3">
+                    {% if quiz.is_public is true %}
+                        <span class="tag is-success">공개</span>
+                    {% else %}
+                        <span class="tag is-danger">비공개</span>
+                    {% endif %}
+                        {{ quiz.title }}
+                    </h3>
+                    <p class="subtitle">by <b>{{ quiz.owner }}</b></p>
+
+                    <div class="content">
+                        <p>생성 날짜 : {{ quiz.created_at|date_to_string }}</p>
+                        <p>마감 날짜 : {{ quiz.finished_at|date_to_string}}</p>
+                        <p>참여 인원 : {{ quiz.joined_people }} 명</p>
+                    </div>
+
+                {% if login_session is not none %}
+                    <div class="buttons">
+                    {% if quiz.owner_id != login_session.user_id %}
+                        <a class="button is-link" href="/quiz/join/{{ quiz.id }}">문제 풀기</a>
+                        <a class="button is-danger">정답 확인</a>
+                    {% else %}
+                        <a class="button is-warning" href="/quiz/custom/{{ quiz.id }}">퀴즈 관리</a>
+                    {% endif %}
+                    </div>
+                {% endif %}
+                </div>
+            {% endfor %}
+            </div>
+        </div>
+    </section>
+{% endblock %}

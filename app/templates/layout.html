@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf8">
+        <title>Quiz</title>
+        <meta name="viewport" content="width=device-width,initial-scale=1.0">
+        <link rel="stylesheet" href="/static/css/bulma.min.css">
+    {% if highlight is true %}
+        <link rel="stylesheet" href="/static/highlight.js/github-dark.min.css">
+    {% endif %}
+    </head>
+    <body>
+        <nav class="navbar container">
+            <div class="navbar-brand">
+                <a class="navbar-item" href="/">Quiz</a>
+                <a role="button" class="navbar-burger" data-target="navbar">
+                    <span></span>
+                    <span></span>
+                    <span></span>
+                </a>
+            </div>
+            <div id="navbar" class="navbar-menu">
+                <div class="navbar-start">
+                {% if 'login' in session %}
+                    <a class="navbar-item" href="/quiz/create-new">
+                        퀴즈 만들기
+                    </a>
+                    <a class="navbar-item" href="/user/login-history">
+                        로그인 기록
+                    </a>
+                {% endif %}
+                </div>
+                <div class="navbar-end">
+                {% if 'login' in session %}
+                    <div class="navbar-item">
+                        <div class="buttons">
+                            <!-- <a class="button is-primary" href="/dashboard">
+                                <strong>대시보드</strong>
+                            </a> -->
+                            <a class="button is-light" href="/auth/logout">
+                                로그아웃
+                            </a>
+                        </div>
+                    </div>
+                {% else %}
+                    <div class="navbar-item">
+                        <div class="buttons">
+                            <a class="button is-primary" href="/auth/sign-up">
+                                <strong>회원가입</strong>
+                            </a>
+                            <a class="button is-light" href="/auth/sign-in">
+                                로그인
+                            </a>
+                        </div>
+                    </div>
+                {% endif %}
+                </div>
+            </div>
+        </nav>
+
+        {% block content %}{% endblock %}
+
+        <script src="/static/js/burger.js"></script>
+    {% if highlight is true %}
+        <script src="/static/highlight.js/highlight.min.js"></script>
+        <script>
+            hljs.highlightAll();
+        </script>
+    {% endif %}
+    </body>
+</html>

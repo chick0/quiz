@@ -1,0 +1,42 @@
+{% extends 'layout.html' %}
+{% block content %}
+    <section class="section">
+        <div class="container">
+            <h1 class="title is-1">퀴즈 만들기</h1>
+            <form method="post">
+                <div class="box">
+                    <div class="field">
+                        <label for="title" class="label">제목</label>
+                        <div class="control">
+                            <input id="title" class="input" type="text" name="title" maxlength="128" placeholder="최대 128자까지 입력 할 수 있습니다." required>
+                        </div>
+                    </div>
+
+                    <div class="field">
+                        <label for="text" class="label">설명</label>
+                        <div class="control">
+                            <textarea id="text" name="text" class="textarea" placeholder="일부 마크 다운 문법을 사용 할 수 있습니다."></textarea>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="box">
+                    <p>퀴즈 공개 설정은 문항을 만든 다음 할 수 있습니다.</p>
+                </div>
+
+                <div class="box">
+                    <div class="field">
+                        <label for="finished_at" class="label">마감 날짜</label>
+                        <div class="control">
+                            <input id="finished_at" class="input" type="date" name="finished_at" required value="{{ default_finished_at }}">
+                        </div>
+                    </div>
+                </div>
+
+                <div class="block">
+                    <button class="button is-link is-fullwidth">투표 생성하기</button>
+                </div>
+            </form>
+        </div>
+    </section>
+{% endblock %}

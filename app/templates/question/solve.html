@@ -1,0 +1,55 @@
+{% extends 'layout.html' %}
+{% block content %}
+    <section class="section">
+        <div class="container">
+            <h1 class="title is-3">문제</h1>
+            <p class="subtitle">{{ question.score }}점</p>
+            {% set error = request.args.get("error") %}
+            {% if error is not none %}
+                <div class="notification is-danger is-light">
+                    <p>{{ error }}</p>
+                </div>
+            {% endif %}
+
+            <div class="content is-medium">
+                {{ question.text|to_html|safe }}
+            </div>
+
+            <form method="post">
+            {% if question.type == 0 %}
+                <div class="field">
+                    <label for="answer-0" class="label">정답</label>
+                    <div class="control">
+                        <div class="select is-fullwidth">
+                            <select id="answer-0" name="answer-0" required>
+                                <option value="O" selected>O</option>
+                                <option value="X">X</option>
+                            </select>
+                        </div>
+                    </div>
+                </div>
+            {% elif question.type == 1 %}
+                <div class="content is-medium">
+                    {{ question.options|parse_options|safe }}
+                </div>
+
+                <div class="field">
+                    <label for="answer-1" class="label">정답</label>
+                    <div class="control">
+                        <input id="answer-1" class="input" type="number" name="answer-1" placeholder="선택지 번호를 입력해주세요." required>
+                    </div>
+                </div>
+            {% else %}
+                <div class="field">
+                    <label for="answer-2" class="label">정답</label>
+                    <div class="control">
+                        <textarea id="answer-2" name="answer-2" class="textarea" required></textarea>
+                    </div>
+                </div>
+            {% endif %}
+
+                <button class="button is-link is-fullwidth" type="submit">다음</button>
+            </form>
+        </div>
+    </section>
+{% endblock %}
